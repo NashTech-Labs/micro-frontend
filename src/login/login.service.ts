@@ -24,7 +24,11 @@ export class LoginService {
       host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
       database: 'eventxbe',
       password: 'india0192',
-      port: 5432, // Default PostgreSQL port
+      port: 5432,
+      ssl: {
+        rejectUnauthorized: false,
+      }, 
+       // Default PostgreSQL port
     });
   }
 
