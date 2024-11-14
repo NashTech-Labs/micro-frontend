@@ -21,9 +21,9 @@ export class LoginService {
   ) {
     this.pool = new Pool({
       user: 'postgres',
-      host: 'localhost',
-      database: 'multi_tenant_app',
-      password: 'root',
+      host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
+      database: 'eventxbe',
+      password: 'india0192',
       port: 5432, // Default PostgreSQL port
     });
   }
