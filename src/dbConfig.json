@@ -93,6 +93,26 @@
       "ssl": {
         "rejectUnauthorized": false
       }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "dtech",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "youtube",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
     }
   ]
 }

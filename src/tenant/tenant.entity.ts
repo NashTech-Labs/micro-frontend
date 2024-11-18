@@ -29,8 +29,8 @@ export class Tenant {
   @Column({ nullable: true })
   location: string;
 
-  @Column('text', { array: true, nullable: true })
-  subscription_details: string[];
+  @Column({ nullable: true })
+  subscription_details: string;
 
   @Column({ nullable: true })
   company_type: string;

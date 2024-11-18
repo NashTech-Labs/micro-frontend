@@ -22,7 +22,7 @@ export class TenantService {
     status: string;
     phone?: string;
     location?: string;
-    subscription_details?: string[];
+    subscription_details?: string;
     company_type?: string;
     image?: string;
     isRegistered?: boolean;
