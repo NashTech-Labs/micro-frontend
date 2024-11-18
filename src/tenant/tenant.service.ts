@@ -103,7 +103,7 @@ export class TenantService {
       await queryRunner.connect();
       connection = this.tenantRepository.manager.connection;
       await queryRunner.query(`CREATE DATABASE "${databaseName}";`);
-      const newConnection = await this.createConnectionToDatabase(databaseName); 
+      const newConnection = await this.createConnectionToDatabase(databaseName);
 
       const newQueryRunner = newConnection.createQueryRunner();
       await newQueryRunner.connect();
@@ -142,7 +142,7 @@ export class TenantService {
         );
         ALTER TABLE IF EXISTS public.employee OWNER TO postgres;
       `);
- 
+
       await newQueryRunner.query(`
         CREATE TABLE IF NOT EXISTS public.practice (
         id SERIAL PRIMARY KEY,
@@ -174,8 +174,6 @@ export class TenantService {
         );
       `);
 
-      
-      
       await newQueryRunner.query(
         `CREATE TABLE IF NOT EXISTS public.competency_skills (
          id SERIAL PRIMARY KEY,
@@ -200,8 +198,7 @@ export class TenantService {
         );
         ALTER TABLE IF EXISTS public.employee_skills
         OWNER TO postgres;
-      `
-      );
+      `);
 
       await newQueryRunner.query(
         `CREATE TABLE IF NOT EXISTS public.project(
@@ -280,9 +277,7 @@ export class TenantService {
         );
       `);
 
-      console.log(
-        `Database '${databaseName}' created successfully.`,
-      );
+      console.log(`Database '${databaseName}' created successfully.`);
     } catch (err) {
       console.error('Error creating database or table:', err);
     } finally {
@@ -300,11 +295,14 @@ export class TenantService {
   ): Promise<DataSource> {
     const newDataSource = new DataSource({
       type: 'postgres',
-      host: 'localhost',
+      host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
       port: 5432,
       username: 'postgres',
-      password: 'root',
+      password: 'india0192',
       database: databaseName,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     });
 
     await newDataSource.initialize();
@@ -327,11 +325,14 @@ export class TenantService {
       }
 
       const newTenantConfig = {
-        host: 'localhost',
+        host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
         port: 5432,
         user: 'postgres',
-        password: 'root',
+        password: 'india0192',
         database: databaseName,
+        ssl: {
+          rejectUnauthorized: false,
+        },
       };
 
       config.tenants.push(newTenantConfig);
