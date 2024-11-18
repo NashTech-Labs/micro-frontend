@@ -7,6 +7,9 @@ interface TenantConfig {
   user: string;
   password: string;
   database: string;
+  ssl?: {
+    rejectUnauthorized: boolean
+  }
 }
 
 function getTenantDbConfig(tenantName: string): TenantConfig | undefined {
