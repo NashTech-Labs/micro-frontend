@@ -27,8 +27,8 @@ export class LoginService {
       port: 5432,
       ssl: {
         rejectUnauthorized: false,
-      }, 
-       // Default PostgreSQL port
+      },
+      // Default PostgreSQL port
     });
   }
 
@@ -85,31 +85,53 @@ export class LoginService {
       }
 
       const tenant = result.rows[0];
-      if (!bcrypt.compareSync(body.password, tenant.password)) {
+      console.log('Plaintext password from request:', body.password);
+      console.log('Hashed password from database:', tenant.password);
+      const hash = await bcrypt.hash(body.password, 10);
+      console.log(hash);
+      const isPasswordValid = bcrypt.compare(
+        body.password,
+        tenant.password,
+        (err, result) => {
+          if (err) {
+            console.error('Error:', err);
+          } else {
+            console.log('Match:', result); // Should print true
+          }
+        },
+      );
+      // if (!bcrypt.compareSync(body.password, tenant.password)) {
+      //   console.log(body.password);
+      //   console.log(tenant.password);
+      //   console.log(bcrypt.compareSync(body.password, tenant.password));
+      //   throw new BadRequestException('Incorrect password');
+      // }
+      if (!isPasswordValid) {
+        console.log('Password comparison result:', isPasswordValid);
         throw new BadRequestException('Incorrect password');
       }
 
       let access = {
-        "employee_id" : null,
-      "isemployeecreate": true,
-        "isemployeeupdate" : true,
-        "isemployeeread" : true,
-        "isemployeedelete" : true,
-        "isprojectcreate" : true,
-        "isprojectupdate" : true,
-        "isprojectread" : true,
-        "isprojectdelete" : true,
-        "iscompetencycreate" : true,
-        "iscompetencyread" : true,
-        "iscompetencyupdate": true,
-        "iscompetencydelete" : true,
-        "ispracticecreate": true,
-        "ispracticeread" : true,
-        "ispracticeupdate": true,
-        "ispracticedelete": true,
-        "iscsvupload": true,
-        "isprofileupdate": true,
-      }
+        employee_id: null,
+        isemployeecreate: true,
+        isemployeeupdate: true,
+        isemployeeread: true,
+        isemployeedelete: true,
+        isprojectcreate: true,
+        isprojectupdate: true,
+        isprojectread: true,
+        isprojectdelete: true,
+        iscompetencycreate: true,
+        iscompetencyread: true,
+        iscompetencyupdate: true,
+        iscompetencydelete: true,
+        ispracticecreate: true,
+        ispracticeread: true,
+        ispracticeupdate: true,
+        ispracticedelete: true,
+        iscsvupload: true,
+        isprofileupdate: true,
+      };
 
       // Generate JWT token
       const token = this.jwtService.sign({
@@ -117,7 +139,7 @@ export class LoginService {
         id: tenant.id,
         code: tenant.code,
         role: 'admin',
-        labels : access,
+        labels: access,
       });
 
       // Remove the password from the tenant object
@@ -172,13 +194,13 @@ export class LoginService {
           id: employee.id,
           code: tenant.code,
           role: 'employee',
-          labels : access
+          labels: access,
         });
 
         // Remove the password from the employee object
         delete employee.password;
         employee['tenant_code'] = body.tenant_code;
-        
+
         // Merge the token into the employee object
         const employeeDetail = { ...employee, token };
         return {
@@ -213,7 +235,6 @@ export class LoginService {
         email: admin.email,
         id: admin.id,
         role: 'super admin',
-      
       });
 
       // Remove the password from the admin object
