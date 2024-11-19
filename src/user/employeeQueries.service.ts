@@ -12,6 +12,9 @@ interface TenantConfig {
   user: string;
   password: string;
   database: string;
+  ssl?: {
+    rejectUnauthorized: boolean
+  }
 }
 
 @Injectable()

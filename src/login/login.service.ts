@@ -27,8 +27,8 @@ export class LoginService {
       port: 5432,
       ssl: {
         rejectUnauthorized: false,
-      }, 
-       // Default PostgreSQL port
+      },
+      // Default PostgreSQL port
     });
   }
 
@@ -91,26 +91,26 @@ export class LoginService {
       }
 
       let access = {
-        "employee_id" : null,
-      "isemployeecreate": true,
-        "isemployeeupdate" : true,
-        "isemployeeread" : true,
-        "isemployeedelete" : true,
-        "isprojectcreate" : true,
-        "isprojectupdate" : true,
-        "isprojectread" : true,
-        "isprojectdelete" : true,
-        "iscompetencycreate" : true,
-        "iscompetencyread" : true,
-        "iscompetencyupdate": true,
-        "iscompetencydelete" : true,
-        "ispracticecreate": true,
-        "ispracticeread" : true,
-        "ispracticeupdate": true,
-        "ispracticedelete": true,
-        "iscsvupload": true,
-        "isprofileupdate": true,
-      }
+        employee_id: null,
+        isemployeecreate: true,
+        isemployeeupdate: true,
+        isemployeeread: true,
+        isemployeedelete: true,
+        isprojectcreate: true,
+        isprojectupdate: true,
+        isprojectread: true,
+        isprojectdelete: true,
+        iscompetencycreate: true,
+        iscompetencyread: true,
+        iscompetencyupdate: true,
+        iscompetencydelete: true,
+        ispracticecreate: true,
+        ispracticeread: true,
+        ispracticeupdate: true,
+        ispracticedelete: true,
+        iscsvupload: true,
+        isprofileupdate: true,
+      };
 
       // Generate JWT token
       const token = this.jwtService.sign({
@@ -118,7 +118,7 @@ export class LoginService {
         id: tenant.id,
         code: tenant.code,
         role: 'admin',
-        labels : access,
+        labels: access,
       });
 
       // Remove the password from the tenant object
@@ -173,13 +173,13 @@ export class LoginService {
           id: employee.id,
           code: tenant.code,
           role: 'employee',
-          labels : access
+          labels: access,
         });
 
         // Remove the password from the employee object
         delete employee.password;
         employee['tenant_code'] = body.tenant_code;
-        
+
         // Merge the token into the employee object
         const employeeDetail = { ...employee, token };
         return {
@@ -214,7 +214,6 @@ export class LoginService {
         email: admin.email,
         id: admin.id,
         role: 'super admin',
-      
       });
 
       // Remove the password from the admin object
