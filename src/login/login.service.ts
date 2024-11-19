@@ -85,29 +85,8 @@ export class LoginService {
       }
 
       const tenant = result.rows[0];
-      console.log('Plaintext password from request:', body.password);
-      console.log('Hashed password from database:', tenant.password);
-      const hash = await bcrypt.hash(body.password, 10);
-      console.log(hash);
-      const isPasswordValid = bcrypt.compare(
-        body.password,
-        tenant.password,
-        (err, result) => {
-          if (err) {
-            console.error('Error:', err);
-          } else {
-            console.log('Match:', result); // Should print true
-          }
-        },
-      );
-      // if (!bcrypt.compareSync(body.password, tenant.password)) {
-      //   console.log(body.password);
-      //   console.log(tenant.password);
-      //   console.log(bcrypt.compareSync(body.password, tenant.password));
-      //   throw new BadRequestException('Incorrect password');
-      // }
+      const isPasswordValid = body.password === tenant.password;
       if (!isPasswordValid) {
-        console.log('Password comparison result:', isPasswordValid);
         throw new BadRequestException('Incorrect password');
       }
 
