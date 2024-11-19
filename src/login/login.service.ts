@@ -85,7 +85,8 @@ export class LoginService {
       }
 
       const tenant = result.rows[0];
-      if (!bcrypt.compareSync(body.password, tenant.password)) {
+      const isPasswordValid = body.password === tenant.password;
+      if (!isPasswordValid) {
         throw new BadRequestException('Incorrect password');
       }
 
