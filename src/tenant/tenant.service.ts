@@ -55,7 +55,8 @@ export class TenantService {
         throw new Error(`Error in password encryption: ${err.message}`);
       }
     };
-    tenantData.password = await hashPassword(tenantData.password);
+    // tenantData.password = await hashPassword(tenantData.password);
+    
 
     if (tenantData.isRegistered) {
       tenantData.status = 'pending';

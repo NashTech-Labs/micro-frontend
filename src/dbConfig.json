@@ -123,6 +123,26 @@
       "ssl": {
         "rejectUnauthorized": false
       }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "hcl",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "dcm",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
     }
   ]
 }
