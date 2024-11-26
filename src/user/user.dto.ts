@@ -30,7 +30,7 @@ export class CreateUserDto {
   @ApiProperty()
   gender: string;
 
-  @IsNotEmpty()
+  
   @IsString()
   @ApiProperty()
   studio_name: string;

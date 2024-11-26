@@ -9,8 +9,7 @@ export class CreateCompetencyDto {
 
     @ApiProperty()
     @IsString()
-    @IsEmail()
-    @IsNotEmpty()
+    
     competency_admin_email: string;
 
     @ApiProperty()

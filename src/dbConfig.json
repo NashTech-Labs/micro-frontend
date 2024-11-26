@@ -143,6 +143,126 @@
       "ssl": {
         "rejectUnauthorized": false
       }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "youtube",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "capgemini",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "capgeminii",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "wipro1",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "tcsion",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "wipro3",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "hcl",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "wipro4",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "chetu",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "wipronew",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "testnew1",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    },
+    {
+      "host": "eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com",
+      "port": 5432,
+      "user": "postgres",
+      "password": "india0192",
+      "database": "testnew2",
+      "ssl": {
+        "rejectUnauthorized": false
+      }
     }
   ]
 }

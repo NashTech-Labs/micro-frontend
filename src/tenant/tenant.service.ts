@@ -27,7 +27,7 @@ export class TenantService {
     image?: string;
     isRegistered?: boolean;
   }): Promise<{ message: string; data?: Tenant }> {
-    // Check if tenant with the same name already exists
+    
     const existingTenantName = await this.tenantRepository.findOne({
       where: { tenant_name: tenantData.tenant_name },
     });
@@ -37,8 +37,8 @@ export class TenantService {
         data: undefined,
       };
     }
-
-    // Check if tenant with the same email already exists
+  
+    
     const existingTenantEmail = await this.tenantRepository.findOne({
       where: { tenant_email: tenantData.tenant_email },
     });
@@ -48,54 +48,49 @@ export class TenantService {
         data: undefined,
       };
     }
-    const hashPassword = (password) => {
-      try {
-        return bcrypt.hash(password, 10);
-      } catch (err) {
-        throw new Error(`Error in password encryption: ${err.message}`);
-      }
-    };
-    // tenantData.password = await hashPassword(tenantData.password);
+  
     
-
-    if (tenantData.isRegistered) {
-      tenantData.status = 'pending';
-    }
-
-    // Check if tenant with the same tenant_code already exists
     let tenantCode: string;
     let existingTenantCode: Tenant | undefined;
-
     do {
-      tenantCode = Math.floor(1000 + Math.random() * 9000).toString(); // Generates a random 4-digit number
+      tenantCode = Math.floor(1000 + Math.random() * 9000).toString(); 
       existingTenantCode = await this.tenantRepository.findOne({
         where: { tenant_code: tenantCode },
       });
     } while (existingTenantCode);
-
+  
+    
     const tenant = new Tenant();
     tenant.tenant_name = tenantData.tenant_name.toLocaleLowerCase();
     tenant.tenant_email = tenantData.tenant_email;
     tenant.role = tenantData.role;
     tenant.tenant_code = tenantCode;
-    // tenant.password = await bcrypt.hash(tenantData.password, 10);
-    tenant.password = tenantData.password;
+    tenant.password = tenantData.password; 
     tenant.status = tenantData.status;
     tenant.location = tenantData.location;
     tenant.subscription_details = tenantData.subscription_details;
     tenant.company_type = tenantData.company_type;
     tenant.image = tenantData.image;
     tenant.isRegistered = tenantData.isRegistered;
-
-    await this.tenantRepository.save(tenant);
-
-    await this.createDatabase(tenant.tenant_name);
-
-    await this.addTenantConfig(tenant.tenant_name);
-
-    return { message: 'Tenant created successfully.', data: tenant };
+  
+    
+    const newTenant = await this.tenantRepository.save(tenant);
+  
+   
+    try {
+      if (!this.tenantRepository.manager.connection.isConnected) {
+        await this.tenantRepository.manager.connection.connect();
+        console.log('Database connection refreshed successfully');
+      }
+    } catch (error) {
+      console.error('Error refreshing the database connection:', error.message);
+      throw new Error('Failed to refresh database connection');
+    }
+  
+   
+    return { message: 'Tenant created successfully.', data: newTenant };
   }
-
+  
   private async createDatabase(databaseName: string): Promise<void> {
     const queryRunner =
       this.tenantRepository.manager.connection.createQueryRunner();
