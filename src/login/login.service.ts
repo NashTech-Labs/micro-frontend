@@ -21,10 +21,10 @@ export class LoginService {
   ) {
     this.pool = new Pool({
       user: 'postgres',
-      host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
-      database: 'eventxbe',
-      password: 'india0192',
-      port: 5432,
+      host: '192.168.1.11',
+      database: 'postgres',
+      password: 'devstackdb',
+      port: 5438,
       ssl: {
         rejectUnauthorized: false,
       },

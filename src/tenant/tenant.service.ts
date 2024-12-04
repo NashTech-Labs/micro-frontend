@@ -292,10 +292,10 @@ export class TenantService {
   ): Promise<DataSource> {
     const newDataSource = new DataSource({
       type: 'postgres',
-      host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
-      port: 5432,
+      host: '192.168.1.11',
+      port: 5438,
       username: 'postgres',
-      password: 'india0192',
+      password: 'devstackdb',
       database: databaseName,
       ssl: {
         rejectUnauthorized: false,
@@ -322,10 +322,10 @@ export class TenantService {
       }
 
       const newTenantConfig = {
-        host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
-        port: 5432,
-        user: 'postgres',
-        password: 'india0192',
+        host: '192.168.1.11',
+      port: 5438,
+      username: 'postgres',
+      password: 'devstackdb',
         database: databaseName,
         ssl: {
           rejectUnauthorized: false,

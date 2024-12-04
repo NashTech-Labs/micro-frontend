@@ -22,11 +22,11 @@ import { AccessLabelsModule } from './accesslabels/access.module';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'eventx.c7uswg62u6zg.eu-north-1.rds.amazonaws.com',
-      port: 5432,
+      host: '192.168.1.11',
+      port: 5438,
       username: 'postgres',
-      password: 'india0192',
-      database: 'eventxbe',
+      password: 'devstackdb',
+      database: 'postgres',
       synchronize: true, // Auto-sync in development, manual in production
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       ssl: {
