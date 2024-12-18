@@ -25,7 +25,7 @@ import { AccessLabelsModule } from './accesslabels/access.module';
       host: '192.168.1.11',
       port: 5438,
       username: 'postgres',
-      password: 'devstackdb',
+      password: 'root',
       database: 'postgres',
       synchronize: true, // Auto-sync in development, manual in production
       entities: [__dirname + '/**/*.entity{.ts,.js}'],

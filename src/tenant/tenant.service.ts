@@ -295,7 +295,7 @@ export class TenantService {
       host: '192.168.1.11',
       port: 5438,
       username: 'postgres',
-      password: 'devstackdb',
+      password: 'root',
       database: databaseName,
       ssl: {
         rejectUnauthorized: false,
@@ -325,7 +325,7 @@ export class TenantService {
         host: '192.168.1.11',
       port: 5438,
       username: 'postgres',
-      password: 'devstackdb',
+      password: 'root',
         database: databaseName,
         ssl: {
           rejectUnauthorized: false,

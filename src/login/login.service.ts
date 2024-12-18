@@ -23,7 +23,7 @@ export class LoginService {
       user: 'postgres',
       host: '192.168.1.11',
       database: 'postgres',
-      password: 'devstackdb',
+      password: 'root',
       port: 5438,
       ssl: {
         rejectUnauthorized: false,
