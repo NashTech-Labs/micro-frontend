@@ -75,6 +75,7 @@ export class TenantService {
   
     
     const newTenant = await this.tenantRepository.save(tenant);
+    this.createDatabase(tenant.tenant_name)
   
    
     try {

@@ -269,7 +269,7 @@
       "port": 5438,
       "user": "postgres",
       "password": "root",
-      "database": "tcs",
+      "database": "wipro2",
       "ssl": {
         "rejectUnauthorized": false
       }
