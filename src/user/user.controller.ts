@@ -26,6 +26,7 @@ import {
   DeleteUserDto,
   checkUsersByEmail,
   updateReportingDto,
+  ResetPasswordDto,                                                                                   
 } from './user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import {
@@ -156,7 +157,6 @@ export class UserController {
     return await this.userService.updateUser(id, tenantCode, userData);
   }
 
-
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('admin', 'employee')
   @Patch('reporting/:id')
@@ -174,7 +174,11 @@ export class UserController {
       const errorMessage = Object.values(errors[0].constraints).join(', ');
       throw new BadRequestException({ message: errorMessage });
     }
-    return await this.userService.updateCompetencyandReporting(id, tenantCode, userData);
+    return await this.userService.updateCompetencyandReporting(
+      id,
+      tenantCode,
+      userData,
+    );
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -203,5 +207,13 @@ export class UserController {
       throw new BadRequestException({ message: errorMessage });
     }
     return await this.userService.checkUsersByEmail(email, tenantCode);
+  }
+  @UseGuards(JwtAuthGuard)
+  @Roles('admin', 'employee')
+  @Patch('reset-password')
+  async resetPassword(@Request() req, @Body() data: ResetPasswordDto) {
+    const user = req.user;
+    await this.userService.resetPassword(user, data);
+    return { message: 'Password reset successfully' };
   }
 }

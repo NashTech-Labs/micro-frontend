@@ -12,7 +12,6 @@ export class UserService {
     @InjectRepository(Tenant)
     private readonly tenantRepository: Repository<Tenant>,
     private readonly employeeQueriesService: EmployeeQueriesService, // Correctly inject the service here
-
   ) {}
 
   async createUser(
@@ -30,7 +29,7 @@ export class UserService {
 
     const hashPassword = (password) => {
       try {
-        return bcrypt.hash(password,10);
+        return bcrypt.hash(password, 10);
       } catch (err) {
         throw new Error(`Error in password encryption: ${err.message}`);
       }
@@ -44,9 +43,6 @@ export class UserService {
         nameTenant,
         userData,
       );
-
-      
-
 
       return result;
     } catch (error) {
@@ -154,11 +150,12 @@ export class UserService {
 
     const nameTenant = tenant.tenant_name;
     try {
-      const result = await this.employeeQueriesService.updateCompetencyAndReporting(
-        nameTenant,
-        id,
-        userData,
-      );
+      const result =
+        await this.employeeQueriesService.updateCompetencyAndReporting(
+          nameTenant,
+          id,
+          userData,
+        );
       return result;
     } catch (error) {
       throw new Error(`Failed to update user: ${error.message}`);
@@ -273,5 +270,48 @@ export class UserService {
     } catch (error) {
       throw new Error(`Failed to filter users: ${error.message}`);
     }
+  }
+  async resetPassword(user, data) {
+    try {
+      if (user.role === 'admin') {
+        await this.tenantResetPassword(user, data);
+      } else if (user.role === 'employee') {
+        await this.employeeResetPassword(user, data);
+      } else {
+        throw new BadRequestException('User role not found');
+      }
+    } catch (error) {
+      throw new Error(`Failed to reset password: ${error.message}`);
+    }
+  }
+  async tenantResetPassword(user, data) {
+    const tenant = await this.tenantRepository.findOne({
+      where: { id: user.id },
+    });
+    if (!tenant) {
+      throw new BadRequestException('Tenant not found');
+    }
+    const hashPassword = (password) => {
+      try {
+        return bcrypt.hash(password, 10);
+      } catch (err) {
+        throw new Error(`Error in password encryption: ${err.message}`);
+      }
+    };
+    tenant.password = await hashPassword(data.password);
+    await this.tenantRepository.save(tenant);
+  }
+  async employeeResetPassword(user, data) {
+    const tenant = await this.tenantRepository.findOne({
+      where: { tenant_code: user.code },
+    });
+    if (!tenant) {
+      throw new BadRequestException('Tenant not found');
+    }
+    await this.employeeQueriesService.resetUserPassword(
+      tenant.tenant_name,
+      user.id,
+      data.password,
+    );
   }
 }

@@ -4,7 +4,7 @@ import dbConfig from '../dbConfig.json';
 import { CompetencyQueriesService } from 'src/competency/competencyQueries.service';
 import { accessLabelService } from 'src/accesslabels/access.service';
 import { accessLabelQueriesService } from 'src/accesslabels/accessQueries.service';
-
+import { bcrypt } from 'bcrypt';
 
 interface TenantConfig {
   host: string;
@@ -13,18 +13,16 @@ interface TenantConfig {
   password: string;
   database: string;
   ssl?: {
-    rejectUnauthorized: boolean
-  }
+    rejectUnauthorized: boolean;
+  };
 }
 
 @Injectable()
 export class EmployeeQueriesService {
   constructor(
-  private readonly competencyQueriesService: CompetencyQueriesService,
-  private readonly accessLabelQueriesService : accessLabelQueriesService
-
-
-  ){}
+    private readonly competencyQueriesService: CompetencyQueriesService,
+    private readonly accessLabelQueriesService: accessLabelQueriesService,
+  ) {}
   private getTenantDbConfig(tenantName: string): TenantConfig | undefined {
     for (const tenant of dbConfig.tenants) {
       if (tenant.database.toLowerCase() === tenantName.toLowerCase()) {
@@ -100,20 +98,20 @@ export class EmployeeQueriesService {
         employeeData.studio_name,
       );
       if (studio.length > 0) {
-       
         if (
-          employeeData.competency_head  && employeeData.competency_head == "yes"
+          employeeData.competency_head &&
+          employeeData.competency_head == 'yes'
         ) {
           let datas = {
-            "competency_name": studio[0].competency_name,
-            "competency_code": studio[0].competency_code,
-            "competency_admin_email": studio[0].competency_admin_email,
-            "status": studio[0].status,
-            "total_project": studio[0].total_project,
-            "total_employee": studio[0].total_employee,
-            "competency_head": employeeData.first_name,
-            "description": studio[0].description,
-            "image": studio[0].image,
+            competency_name: studio[0].competency_name,
+            competency_code: studio[0].competency_code,
+            competency_admin_email: studio[0].competency_admin_email,
+            status: studio[0].status,
+            total_project: studio[0].total_project,
+            total_employee: studio[0].total_employee,
+            competency_head: employeeData.first_name,
+            description: studio[0].description,
+            image: studio[0].image,
           };
           await this.competencyQueriesService.updateCompetency(
             tenantName,
@@ -153,32 +151,32 @@ export class EmployeeQueriesService {
     insertResult[0]['tenant_name'] = tenantName;
 
     let accessLabelsforEmployee = {
-      employee_id : insertResult[0].id,
-      isemployeecreate : false,
-      isemployeeupdate : false,
+      employee_id: insertResult[0].id,
+      isemployeecreate: false,
+      isemployeeupdate: false,
       isemployeeread: true,
-      isemployeedelete : false, 
+      isemployeedelete: false,
       isprojectcreate: false,
       isprojectupdate: false,
-      isprojectread: true, 
+      isprojectread: true,
       isprojectdelete: false,
       iscompetencycreate: false,
       iscompetencyread: true,
-      iscompetencyupdate : false,
+      iscompetencyupdate: false,
       iscompetencydelete: false,
       ispracticecreate: false,
       ispracticeread: true,
       ispracticeupdate: false,
       ispracticedelete: false,
       iscsvupload: false,
-      isprofileupdate: true, 
-    }
-    const access = []
-     await this.accessLabelQueriesService.createAccess(
+      isprofileupdate: true,
+    };
+    const access = [];
+    await this.accessLabelQueriesService.createAccess(
       tenantName,
-      accessLabelsforEmployee
-    )
-    if(access.length == 0){
+      accessLabelsforEmployee,
+    );
+    if (access.length == 0) {
       return {
         message: 'User created successfully but access not given',
         data: insertResult[0],
@@ -213,7 +211,10 @@ export class EmployeeQueriesService {
     const query = 'SELECT * FROM employee WHERE email = $1';
     const result = await this.executeQuery(tenantName, query, [email]);
     if (result.length > 0) {
-      return { message: 'Employee with this email already exist', data : result[0] };
+      return {
+        message: 'Employee with this email already exist',
+        data: result[0],
+      };
     } else {
       return { message: 'Employee can be created with this email' };
     }
@@ -354,11 +355,7 @@ export class EmployeeQueriesService {
       RETURNING *;
     `;
 
-    const values = [
-      userData.studio_name,
-      userData.reporting_manager,
-      id,
-    ];
+    const values = [userData.studio_name, userData.reporting_manager, id];
 
     const updateResult = await this.executeQuery(
       tenantName,
@@ -374,9 +371,9 @@ export class EmployeeQueriesService {
   async updateCompetencyHead(
     tenantName: string,
     id: string,
-    data : boolean,
-    studio : string
-  ): Promise<{message : string, data: any}>{
+    data: boolean,
+    studio: string,
+  ): Promise<{ message: string; data: any }> {
     const queryUpdate = `
     UPDATE public.employee
     SET
@@ -387,23 +384,17 @@ export class EmployeeQueriesService {
     RETURNING *;
   `;
 
-  const values = [
-    data,
-    studio,
-    id,
-  ];
+    const values = [data, studio, id];
 
-  const updateResult = await this.executeQuery(
-    tenantName,
-    queryUpdate,
-    values,
-  );
-  return {
-    message: 'User data updated successfully with competency head.',
-    data: updateResult[0],
-  };
-
-
+    const updateResult = await this.executeQuery(
+      tenantName,
+      queryUpdate,
+      values,
+    );
+    return {
+      message: 'User data updated successfully with competency head.',
+      data: updateResult[0],
+    };
   }
 
   async deleteEmployee(
@@ -411,7 +402,7 @@ export class EmployeeQueriesService {
     id: string,
   ): Promise<{ message: string }> {
     const queryDelete = `UPDATE FROM public.employee SET status=$1 WHERE id = $2`;
-    await this.executeQuery(tenantName, queryDelete, ["inactive",id]);
+    await this.executeQuery(tenantName, queryDelete, ['inactive', id]);
     return { message: 'User deleted successfully.' };
   }
 
@@ -463,5 +454,29 @@ export class EmployeeQueriesService {
       message: 'Retrieved all designation successfully.',
       data: designations,
     };
+  }
+  async resetUserPassword(
+    tenantName: string,
+    userId: string,
+    newPassword: string,
+  ): Promise<void> {
+    const queryCheckUser = `      SELECT * FROM public.employee      WHERE id = $1    `;
+    const userResult = await this.executeQuery(tenantName, queryCheckUser, [
+      userId,
+    ]);
+    if (userResult.length === 0) {
+      throw new BadRequestException('User not found. Unable to reset password');
+    }
+    const hashPassword = (password) => {
+      try {
+        return bcrypt.hash(password, 10);
+      } catch (err) {
+        throw new Error(`Error in password encryption: ${err.message}`);
+      }
+    };
+    const encryptedPassword = await hashPassword(newPassword);
+    const queryUpdatePassword = `      UPDATE public.employee      SET        password = $1,        updated_at = NOW()      WHERE id = $2      RETURNING id, email, first_name, updated_at;    `;
+    const values = [encryptedPassword, userId];
+    await this.executeQuery(tenantName, queryUpdatePassword, values);
   }
 }
