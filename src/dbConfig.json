@@ -259,7 +259,7 @@
       "port": 5432,
       "user": "postgres",
       "password": "india0192",
-      "database": "testnew2",
+      "database": "testnew3",
       "ssl": {
         "rejectUnauthorized": false
       }
